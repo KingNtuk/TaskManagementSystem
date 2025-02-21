@@ -1,0 +1,51 @@
+<?php
+
+namespace App\Http\Controllers;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
+use App\Models\Task;
+
+class TaskController extends Controller
+{
+    public function index(Request $request)
+    {
+        return response()->json($request->user()->tasks);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'nullable|string',
+            'due_date' => 'nullable|date',
+        ]);
+
+        $task = $request->user()->tasks()->create($request->all());
+
+        return response()->json($task);
+    }
+
+    public function update(Request $request, Task $task)
+    {
+        $this->authorize('update', $task);
+
+        $request->validate([
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'status' => 'in:pending,completed',
+            'due_date' => 'nullable|date',
+        ]);
+
+        $task->update($request->all());
+
+        return response()->json($task);
+    }
+
+    public function destroy(Task $task)
+    {
+        $this->authorize('delete', $task);
+        $task->delete();
+
+        return response()->json(['message' => 'Task deleted']);
+    }
+}
