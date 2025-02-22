@@ -17,4 +17,8 @@ class EnsureFrontendsRequestAreStated
     {
         return $next($request);
     }
+
+    protected $except = [
+        'api/*' // Exclude API routes from CSRF protection
+    ];
 }

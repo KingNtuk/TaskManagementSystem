@@ -27,7 +27,11 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        $this->authorize('update', $task);
+        // $this->authorize('update', $task);
+
+        if (auth()->user()->id !== $task->id) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $request->validate([
             'title' => 'sometimes|string',
@@ -43,7 +47,10 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
-        $this->authorize('delete', $task);
+        // $this->authorize('delete', $task);
+        if (auth()->user()->id !== $task->id) {
+            abort(403, 'Unauthorized action.');
+        }
         $task->delete();
 
         return response()->json(['message' => 'Task deleted']);
