@@ -20,9 +20,6 @@ class Kernel extends HttpKernel
         // Handles CORS (Important for your issue!)
         \Illuminate\Http\Middleware\HandleCors::class,
 
-        // Prevents request tampering
-        \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
-
         // Automatically trims strings from request input
         \Illuminate\Foundation\Http\Middleware\TrimStrings::class,
 
@@ -54,11 +51,9 @@ class Kernel extends HttpKernel
      * The application's middleware aliases.
      */
     protected $middlewareAliases = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

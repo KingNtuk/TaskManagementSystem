@@ -12,7 +12,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'], // Define allowed paths
+    'paths' => ['*', 'api/*', 'sanctum/csrf-cookie'], // Define allowed paths
 
     'allowed_methods' => ['*'], // Allows all HTTP methods (GET, POST, PUT, DELETE, etc.)
 
