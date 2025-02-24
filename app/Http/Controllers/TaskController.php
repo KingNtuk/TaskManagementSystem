@@ -45,10 +45,11 @@ class TaskController extends Controller
         return response()->json($task);
     }
 
-    public function destroy(Task $task)
+
+    public function destroy(Request $request , Task $task)
     {
         // $this->authorize('delete', $task);
-        if (auth()->user()->id !== $task->id) {
+        if ($request->user()->id !== $task->user_id) {
             abort(403, 'Unauthorized action.');
         }
         $task->delete();
