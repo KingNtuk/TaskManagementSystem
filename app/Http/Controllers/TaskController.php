@@ -27,15 +27,15 @@ class TaskController extends Controller
 
     public function update(Request $request, Task $task)
     {
-        // $this->authorize('update', $task);
-
-        if (auth()->user()->id !== $task->id) {
+        
+        if ($request->user()->id !== $task->user_id) {
             abort(403, 'Unauthorized action.');
+
         }
 
         $request->validate([
             'title' => 'sometimes|string',
-            'description' => 'sometimes|string',
+            'description' => 'nullable|string',
             'status' => 'in:pending,completed',
             'due_date' => 'nullable|date',
         ]);
